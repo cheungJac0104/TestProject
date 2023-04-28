@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using TestProject;
-using TestProject.Extension;
 using TestProject.Policies;
 
 try
@@ -14,7 +13,9 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
+
     builder.Services.AddClientPolicy();
+    builder.Services.AddStaffPolicy();
     builder.Services.AddMediKAuthHandler();
 
     var app = builder.Build();

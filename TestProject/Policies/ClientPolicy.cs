@@ -20,10 +20,12 @@ namespace TestProject.Policies
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ClientPolicyRequirement requirement)
         {
             
-            if (context.User.IsInRole(PolicyEnum.ClientPolicyRequire.Val()))
-            {
-                context.Succeed(requirement);
-            }
+            //if (context.User.IsInRole(PolicyEnum.ClientPolicyRequire.Val()))
+            //{
+            //    context.Succeed(requirement);
+            //}
+
+            context.Succeed(requirement);
 
             return Task.CompletedTask;
         }
@@ -36,6 +38,23 @@ namespace TestProject.Policies
         }
     }
 
+    public static class ClientPolicyExtension
+    {
+        public static void AddClientPolicy(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyEnum.ClientPolicy.Val(), policy =>
+                {
+                    policy.Requirements.Add(new ClientPolicyRequirement(PolicyEnum.ClientPolicyRequire.Val()));
+                });
 
-}
+            });
+
+            services.AddSingleton<IAuthorizationHandler, ClientPolicyHandler>();
+        }
+    }
+
+
+    }
 

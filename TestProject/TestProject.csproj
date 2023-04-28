@@ -15,10 +15,8 @@
 
   <ItemGroup>
     <None Remove="Policies\" />
-    <None Remove="Extension\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Policies\" />
-    <Folder Include="Extension\" />
   </ItemGroup>
 </Project>

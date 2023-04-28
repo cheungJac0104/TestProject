@@ -21,7 +21,7 @@ public class WeatherForecastController : ControllerBase
     }
 
 
-    [ClientAuthorize]
+    [ClientAuthorize,StaffAuthorize]
     [HttpGet("GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
