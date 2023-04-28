@@ -35,9 +35,9 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet("GetTestCall")]
-    public int Test()
+    public IActionResult Test()
     {
-        return 1;
+        return Ok();
     }
 
 }

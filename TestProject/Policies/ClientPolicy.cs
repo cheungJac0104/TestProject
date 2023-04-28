@@ -19,11 +19,19 @@ namespace TestProject.Policies
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ClientPolicyRequirement requirement)
         {
-            
-            //if (context.User.IsInRole(PolicyEnum.ClientPolicyRequire.Val()))
-            //{
-            //    context.Succeed(requirement);
-            //}
+
+            string token = (context.Resource as DefaultHttpContext)?
+                .Request
+                .Headers["Authorization"]
+                .ToString()
+                .Replace("Bearer ", "") ?? string.Empty;
+
+
+
+            if (context.User.IsInRole(requirement.Identity))
+            {
+                context.Succeed(requirement);
+            }
 
             context.Succeed(requirement);
 

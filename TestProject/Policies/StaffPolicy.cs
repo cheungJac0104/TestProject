@@ -19,7 +19,7 @@ namespace TestProject.Policies
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, StaffPolicyRequirement requirement)
         {
 
-            if (context.User.IsInRole(PolicyEnum.StaffPolicyRequire.Val()))
+            if (context.User.IsInRole(requirement.Identity))
             {
                 context.Succeed(requirement);
             }
@@ -44,7 +44,7 @@ namespace TestProject.Policies
 
                 options.AddPolicy(PolicyEnum.StaffPolicy.Val(), policy =>
                 {
-                    policy.Requirements.Add(new ClientPolicyRequirement(PolicyEnum.StaffPolicyRequire.Val()));
+                    policy.Requirements.Add(new StaffPolicyRequirement(PolicyEnum.StaffPolicyRequire.Val()));
                 });
 
             });
