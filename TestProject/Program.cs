@@ -14,7 +14,9 @@ try
     // Add services to the container.
 
     builder.Services.AddDbContext<AppDBContext>(options => options
-              .UseMySql(TestProject.Helper.ConfigurationManager.AppSetting.GetConnectionString("connection"), MySqlServerVersion.LatestSupportedServerVersion));
+              .UseMySql(TestProject.Helper.ConfigurationManager.AppSetting.GetConnectionString("MySql"), MySqlServerVersion.LatestSupportedServerVersion));
+    builder.Services.AddDbContext<AppDBContext>(options => options
+              .UseFirebird(TestProject.Helper.ConfigurationManager.AppSetting.GetConnectionString("FireBird")));
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
