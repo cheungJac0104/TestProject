@@ -19,7 +19,7 @@ namespace TestProject.Helper
         {
             AppSetting = new ConfigurationBuilder()
                     .SetBasePath(currentPath)
-                    .AddJsonFile("Settings/appsettings.json") // your path here
+                    .AddJsonFile("appsettings.json") // your path here
                     .Build();
 
             int _iConnectionType = 0;
