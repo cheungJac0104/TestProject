@@ -24,9 +24,10 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
-    // need fix
+    // Services
     builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
-    
+    builder.Services.AddScoped<IPatientQueueServices, PatientQueueServices>();
+
     builder.Services.AddClientPolicy();
     builder.Services.AddStaffPolicy();
     builder.Services.AddMediKAuthHandler();
