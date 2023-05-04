@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using TestProject.Controllers;
+using TestProject.Services;
 
 namespace TestProject
 {
@@ -15,8 +17,10 @@ namespace TestProject
 
 	public class MediKAuthSchemeHandler : AuthenticationHandler<MediKAuthSchemeOption>
 	{
+        private readonly ILoggerFactory _logger;
         public MediKAuthSchemeHandler(IOptionsMonitor<MediKAuthSchemeOption> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
         {
+            _logger = logger;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()

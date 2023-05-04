@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using TestProject;
 using TestProject.Policies;
+using TestProject.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using TestProject.Context;
 
 try
 {
@@ -8,11 +13,16 @@ try
 
     // Add services to the container.
 
+    builder.Services.AddDbContext<AppDBContext>(options => options
+              .UseMySql(TestProject.Helper.ConfigurationManager.AppSetting.GetConnectionString("connection"), MySqlServerVersion.LatestSupportedServerVersion));
+
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
+    // need fix
+    //builder.Services.AddSingleton<IPatientInfoServices, PatientInfoServices>();
 
     builder.Services.AddClientPolicy();
     builder.Services.AddStaffPolicy();
