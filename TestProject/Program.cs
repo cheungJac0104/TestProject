@@ -13,10 +13,15 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
+    builder.Services.AddRouting(r => r.LowercaseUrls = true);
+
+    builder.Services.AddHttpContextAccessor();
+
+    builder.Services.AddMediKAuthHandler();
 
     builder.Services.AddClientPolicy();
     builder.Services.AddStaffPolicy();
-    builder.Services.AddMediKAuthHandler();
+    
 
     var app = builder.Build();
 

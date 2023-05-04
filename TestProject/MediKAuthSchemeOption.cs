@@ -10,7 +10,6 @@ namespace TestProject
 	{
 		private const string MediKAuthScheme = "MKA";
 		public static string Scheme => MediKAuthScheme;
-		public string HeaderName { get; set; }
 	}
 
 	public class MediKAuthSchemeHandler : AuthenticationHandler<MediKAuthSchemeOption>
@@ -21,18 +20,23 @@ namespace TestProject
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
-            if (!Request.Headers.TryGetValue(Options.HeaderName, out var headerValue))
+            var authHeader = Request.Headers["Authorization"];
+
+            var parts = authHeader.ToString().Split(" ");
+
+            if (parts.Length != 2 || !parts[0].Equals("Bearer"))
             {
                 return AuthenticateResult.NoResult();
             }
 
-            // Authenticate the user based on the header value
-            // ...
+            var token = parts[1];
 
             var claims = new[] { new Claim(ClaimTypes.Name, "username"), new Claim(ClaimTypes.Role, "Client"), };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
             var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+            await Task.CompletedTask;
 
             return AuthenticateResult.Success(ticket);
         }
@@ -42,12 +46,9 @@ namespace TestProject
     {
         public static void AddMediKAuthHandler(this IServiceCollection services)
         {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = MediKAuthSchemeOption.Scheme;
-            })
-    .AddScheme<MediKAuthSchemeOption, MediKAuthSchemeHandler>(MediKAuthSchemeOption.Scheme
-    , options => { options.HeaderName = "X-Custom-Header"; });
+            services.AddAuthentication()
+            .AddScheme<MediKAuthSchemeOption, MediKAuthSchemeHandler>(MediKAuthSchemeOption.Scheme
+            , options => {});
         }
     }
 }
