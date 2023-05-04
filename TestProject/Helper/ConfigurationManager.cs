@@ -29,28 +29,5 @@ namespace TestProject.Helper
 
 
 
-        public static dynamic getDBConnection () 
-        {
-
-            if (currentConnectionType == enumSource.WEBAPI)
-            {
-                var _connectionString = AppSetting.GetValue<string>("ConnectionStrings:connection");
-                return new MysqlDBContext(_connectionString);
-            }
-            if (currentConnectionType == enumSource.MEDIKARE_V1)
-            {
-                var _connectionString = AppSetting.GetValue<string>("ConnectionStrings:connection");
-                return new FirebirdlDBContext(_connectionString);
-            }
-            if (currentConnectionType == enumSource.MEDIKARE_V3)
-            {
-                var _connectionString = AppSetting.GetValue<string>("ConnectionStrings:connection");
-                return new MysqlDBContext(_connectionString);
-            }
-
-            return null;
-
-        }
-
     }
 }
