@@ -20,11 +20,18 @@ try
 
 
     builder.Services.AddControllers();
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
     // Services
+
+    builder.Services.AddRouting(r => r.LowercaseUrls = true);
+
+    builder.Services.AddHttpContextAccessor();
+
+    // services injection
     builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
     builder.Services.AddScoped<IPatientQueueServices, PatientQueueServices>();
 
