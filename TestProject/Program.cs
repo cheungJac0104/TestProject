@@ -22,8 +22,8 @@ try
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
     // need fix
-    //builder.Services.AddSingleton<IPatientInfoServices, PatientInfoServices>();
-
+    builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
+    
     builder.Services.AddClientPolicy();
     builder.Services.AddStaffPolicy();
     builder.Services.AddMediKAuthHandler();
