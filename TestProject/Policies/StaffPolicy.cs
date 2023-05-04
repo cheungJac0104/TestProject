@@ -19,10 +19,7 @@ namespace TestProject.Policies
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, StaffPolicyRequirement requirement)
         {
 
-            if (context.User.IsInRole(requirement.Identity))
-            {
-                context.Succeed(requirement);
-            }
+            context.Succeed(requirement);
 
             return Task.CompletedTask;
         }

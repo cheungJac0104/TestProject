@@ -17,21 +17,13 @@ namespace TestProject.Policies
 
     public class ClientPolicyHandler : AuthorizationHandler<ClientPolicyRequirement>
     {
+
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ClientPolicyRequirement requirement)
         {
 
-            string token = (context.Resource as DefaultHttpContext)?
-                .Request
-                .Headers["Authorization"]
-                .ToString()
-                .Replace("Bearer ", "") ?? string.Empty;
+            var claimIdentity = context.User.Identity as ClaimsIdentity;
 
-
-
-            if (context.User.IsInRole(requirement.Identity))
-            {
-                context.Succeed(requirement);
-            }
+            claimIdentity?.AddClaim(new Claim(ClaimTypes.NameIdentifier, requirement.Identity));
 
             context.Succeed(requirement);
 

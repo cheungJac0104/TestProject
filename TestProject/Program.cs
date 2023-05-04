@@ -26,6 +26,10 @@ try
     builder.Services.AddSwaggerGen();
     builder.Services.ConfigureCors();
 
+    builder.Services.AddRouting(r => r.LowercaseUrls = true);
+
+    builder.Services.AddHttpContextAccessor();
+
     // services injection
     builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
     
