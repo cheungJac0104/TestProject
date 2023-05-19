@@ -1,2 +1,7 @@
 # TestProject
-Test the Middleware which comprise in API
+
+Test Project - A Project for api endpoint
+Middleware - middleware
+Servicee - microservice
+EntityFramework - DAL
+Infrastructre - general functionality 
