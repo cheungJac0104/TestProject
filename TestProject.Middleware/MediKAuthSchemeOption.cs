@@ -4,7 +4,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
-namespace TestProject
+namespace TestProject.Middleware
 {
 	public class MediKAuthSchemeOption : AuthenticationSchemeOptions
 	{

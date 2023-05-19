@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using TestProject;
-using TestProject.Policies;
+using TestProject.Middleware.Policies;
+using TestProject.Middleware;
 
 try
 {

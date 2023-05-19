@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TestProject.Policies
+namespace TestProject.Middleware.Policies
 {
 	public static class PoliciesEnum
 	{

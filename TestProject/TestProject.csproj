@@ -16,7 +16,9 @@
   <ItemGroup>
     <None Remove="Policies\" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="Policies\" />
+    <ProjectReference Include="..\TestProject.Middleware\TestProject.Middleware.csproj" />
+    <ProjectReference Include="..\TestProject.Service\TestProject.Service.Weather.csproj" />
   </ItemGroup>
 </Project>
