@@ -1,8 +1,4 @@
-﻿using TestProject.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using static TestProject.Helper.GlobalVar;
 
 namespace TestProject.Helper

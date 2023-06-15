@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
-using static TestProject.Policies.PoliciesEnum;
+using static TestProject.Middleware.Policies.PoliciesEnum;
 
-namespace TestProject.Policies
+namespace TestProject.Middleware.Policies
 {
     public class StaffPolicyRequirement : IAuthorizationRequirement
     {

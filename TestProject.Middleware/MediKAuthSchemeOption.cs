@@ -3,10 +3,8 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
-using TestProject.Controllers;
-using TestProject.Services;
 
-namespace TestProject
+namespace TestProject.Middleware
 {
 	public class MediKAuthSchemeOption : AuthenticationSchemeOptions
 	{

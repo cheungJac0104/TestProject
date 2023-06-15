@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 //
 namespace TestProject.Controllers
 {
+    
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PatientQueueController : ControllerBase
@@ -26,6 +27,7 @@ namespace TestProject.Controllers
         /// </summary> 
         /// <param name="PatientQueueQuery"></param>
         /// <returns></returns>
+        [ApiVersion("1.0")]
         [HttpGet]
         public async Task<ApiResponse> FindAllPatientQueues([FromQuery] PatientQueueQuery query)
         {

@@ -4,6 +4,7 @@ using TestProject.Services;
 
 namespace TestProject.Controllers
 {
+    
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PatientInfoController : ControllerBase
@@ -17,7 +18,7 @@ namespace TestProject.Controllers
             _logger = logger;
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
-
+        [ApiVersion("1.0")]
         [HttpGet("{recordIdx}")]
         public async Task<ApiResponse> FindOnePatient(string recordIdx)
         {

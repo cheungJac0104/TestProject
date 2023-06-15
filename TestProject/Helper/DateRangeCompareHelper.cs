@@ -1,5 +1,4 @@
-﻿using System;
-namespace TestProject.Helper
+﻿namespace TestProject.Helper
 {
 	public static class DateRangeCompareHelper
 	{
