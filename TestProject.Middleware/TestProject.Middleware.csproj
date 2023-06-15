@@ -7,4 +7,17 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Update="Properties\launchSettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="AppSettingsOptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AppSettingsOptions\" />
+  </ItemGroup>
 </Project>

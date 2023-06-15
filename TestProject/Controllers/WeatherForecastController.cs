@@ -26,7 +26,7 @@ public class WeatherForecastController : ControllerBase
     }
 
 
-    
+    [ApiVersion("1.0")]
     [HttpGet("GetWeatherForecast")]
     [ClientAuthorize, StaffAuthorize]
     public Task<ResponseDto> Get()
@@ -36,6 +36,7 @@ public class WeatherForecastController : ControllerBase
          
     }
 
+    [ApiVersion("2.0")]
     [HttpGet("GetTestCall")]
     public IActionResult Test()
     {
