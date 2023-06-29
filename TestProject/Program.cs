@@ -58,7 +58,10 @@ try
     builder.Services.AddStaffPolicy();
     builder.Services.AddMediKAuthHandler();
 
-    var key = Encoding.ASCII.GetBytes("");
+
+    var jwtOptions = new JwtOptions();
+    builder.Configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
+    var key = Encoding.ASCII.GetBytes(jwtOptions.Key ?? "");
     builder.Services.AddJwtAuthHandler(key);
 
 

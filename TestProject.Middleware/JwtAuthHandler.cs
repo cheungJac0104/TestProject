@@ -12,7 +12,8 @@ namespace TestProject.Middleware
 			{
 				opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			}).AddJwtBearer(opt =>
+			})
+				.AddJwtBearer(opt =>
 			{
 				opt.RequireHttpsMetadata = false;
 				opt.SaveToken = true;
