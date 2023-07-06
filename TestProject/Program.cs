@@ -11,6 +11,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using TestProject.Services.Staff;
+using Microsoft.Extensions.Options;
 
 try
 {
@@ -30,6 +31,27 @@ try
     builder.Services.AddSwaggerGen(opt => {
         opt.SwaggerDoc("v1", new OpenApiInfo() { Title = $"Medikare API v1.0", Version = "1.0"});
         opt.SwaggerDoc("v2", new OpenApiInfo() { Title = $"Medikare API v2.0", Version = "2.0" });
+
+        opt.AddSecurityDefinition("apikey", new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.ApiKey,
+            Name = "Authorization",
+            In = ParameterLocation.Header
+        });
+        opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "apikey"
+                    }
+                },
+                new string[] {}
+            }
+        });
 
         opt.DocInclusionPredicate((doc, apiDesc) =>
         {
