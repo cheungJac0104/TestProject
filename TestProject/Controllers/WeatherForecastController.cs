@@ -1,11 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TestProject.Middleware.Policies;
+using TestProject.Service.Weather;
 
 namespace TestProject.Controllers;
+
+
 
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
+    private WeatherService _service;
+
     private static readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -13,21 +19,34 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, WeatherService service)
     {
         _logger = logger;
+        _service = service;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+
+    [HttpGet("GetWeatherForecast")]
+    [ClientAuthorize, StaffAuthorize]
+    public Task<ResponseDto> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+
+        return _service.GetWeather();
+         
     }
+
+    [HttpGet("GetTestCall")]
+    public IActionResult Test()
+    {
+        return Ok();
+    }
+
+
+
+
+
+
+    
 }
+
 
