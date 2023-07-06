@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 try
 {
@@ -21,16 +22,10 @@ try
     builder.Services.AddDbContext<AppDBContext>(options => options
               .UseFirebird(TestProject.Helper.ConfigurationManager.AppSetting.GetConnectionString("FireBird")));
 
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    builder.Services.ConfigureCors();
-    // Services
-
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
+
     builder.Services.AddSwaggerGen(opt => {
         opt.SwaggerDoc("v1", new OpenApiInfo() { Title = $"Medikare API v1.0", Version = "1.0"});
         opt.SwaggerDoc("v2", new OpenApiInfo() { Title = $"Medikare API v2.0", Version = "2.0" });
@@ -43,7 +38,7 @@ try
             .OfType<ApiVersionAttribute>()
             .SelectMany(Attribute => Attribute.Versions).ToList();
 
-            return versions.Any(versions => $"v{versions.ToString()}".StartsWith(doc));
+            return versions.Any(versions => $"v{versions}".StartsWith(doc));
         });
     });
 
@@ -62,6 +57,14 @@ try
     builder.Services.AddClientPolicy();
     builder.Services.AddStaffPolicy();
     builder.Services.AddMediKAuthHandler();
+
+
+    var jwtOptions = new JwtOptions();
+    builder.Configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
+    var key = Encoding.ASCII.GetBytes(jwtOptions.Key ?? "");
+    builder.Services.AddJwtAuthHandler(key);
+
+
 
     var app = builder.Build();
 
