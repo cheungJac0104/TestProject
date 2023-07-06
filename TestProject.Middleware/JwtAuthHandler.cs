@@ -1,14 +1,17 @@
-﻿using System;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using TestProject.Middleware.AppSettingsOptions;
 
 namespace TestProject.Middleware
 {
 	public static class JwtAuthHandler
 	{
-		public static void AddJwtAuthHandler(this IServiceCollection services, byte[] key)
+		public static void AddJwtAuthHandler(this IServiceCollection services, JwtOptions jwtOptions)
 		{
-			services.AddAuthentication(opt =>
+            var key = Encoding.ASCII.GetBytes(jwtOptions.Key ?? "");
+
+            services.AddAuthentication(opt =>
 			{
 				opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -19,10 +22,13 @@ namespace TestProject.Middleware
 				opt.SaveToken = true;
 				opt.TokenValidationParameters = new TokenValidationParameters
                 {
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(key),
-					ValidateIssuer = false,
-					ValidateAudience = false
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidAudience = jwtOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
 				};
 			});
 		}
