@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using TestProject.Services.Staff;
 
 try
 {
@@ -53,6 +54,7 @@ try
     // services injection
     builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
     builder.Services.AddScoped<IPatientQueueServices, PatientQueueServices>();
+    builder.Services.AddScoped<IStaffServices, StaffServices>();
 
     builder.Services.AddClientPolicy();
     builder.Services.AddStaffPolicy();
