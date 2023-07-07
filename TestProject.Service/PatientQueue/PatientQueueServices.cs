@@ -1,5 +1,7 @@
 ﻿using TestProject.Models;
 using TestProject.Context;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace TestProject.Services
 {
@@ -12,8 +14,8 @@ namespace TestProject.Services
         public PatientQueueServices(AppDBContext dBContext, IConfiguration configuration, ILogger<PatientQueueServices> logger)
         {
             _dBContext = dBContext;
-            _configuration = Helper.ConfigurationManager.AppSetting;
             _logger = logger;
+            _configuration = configuration;
         }
 
         public async Task<Tuple<List<PatientQueue>, int>> FindAllPatientQueues(PatientQueueQuery query)

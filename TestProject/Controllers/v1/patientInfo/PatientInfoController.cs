@@ -4,7 +4,7 @@ using TestProject.Services;
 
 namespace TestProject.Controllers
 {
-    
+
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PatientInfoController : ControllerBase

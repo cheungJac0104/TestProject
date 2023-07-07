@@ -16,6 +16,17 @@
   <ItemGroup>
     <ProjectReference Include="..\TestProject.EntityFrameworkCore\TestProject.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\TestProject.Infrastructure\TestProject.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\TestProject.DAL\TestProject.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="PatientInfo\" />
+    <None Remove="PatientQueue\" />
+    <None Remove="Staff\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PatientInfo\" />
+    <Folder Include="PatientQueue\" />
+    <Folder Include="Staff\" />
+  </ItemGroup>
 </Project>

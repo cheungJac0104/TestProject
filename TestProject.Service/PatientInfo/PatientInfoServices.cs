@@ -1,6 +1,8 @@
 ﻿using System;
 using TestProject.Models;
 using TestProject.Context;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace TestProject.Services
 {
@@ -9,7 +11,7 @@ namespace TestProject.Services
         private readonly AppDBContext _dBContext;
         private readonly ILogger<PatientInfoServices> _logger;
 
-        public PatientInfoServices(AppDBContext dBContext, IConfiguration configuration, ILogger<PatientInfoServices> logger)
+        public PatientInfoServices(AppDBContext dBContext, ILogger<PatientInfoServices> logger)
         {
             _dBContext = dBContext;
             _logger = logger;
