@@ -36,7 +36,8 @@ namespace TestProject.Controllers.v1.auth
             {
                 var claims = new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.USERNAME),
+                    new Claim(JwtRegisteredClaimNames.Name, user.USERNAME),
+                    new Claim(JwtRegisteredClaimNames.Typ, user.STAFF_TYPE),
                     new Claim(JwtRegisteredClaimNames.Email, user.EMAIL),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
