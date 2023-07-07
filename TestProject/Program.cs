@@ -63,7 +63,7 @@ try
         });
     });
 
-    builder.Services.Configure<AppSetting>(builder.Configuration.GetSection("AppSetting"));
+    builder.Services.Configure<AppSetting>(builder.Configuration.GetSection(nameof(AppSetting)));
 
     builder.Services.AddControllers(opt => {
 
@@ -82,7 +82,9 @@ try
 
 
     var jwtOptions = new JwtOptions();
-    builder.Configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
+    var jwtConfig = builder.Configuration.GetSection(nameof(JwtOptions));
+    builder.Services.Configure<JwtOptions>(jwtConfig);
+    jwtConfig.Bind(jwtOptions);
     builder.Services.AddJwtAuthHandler(jwtOptions);
 
 
