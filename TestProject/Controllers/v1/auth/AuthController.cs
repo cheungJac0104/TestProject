@@ -3,8 +3,10 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TestProject.Context;
+using TestProject.Middleware.AppSettingsOptions;
 using TestProject.Models;
 using TestProject.Services.Staff;
 
@@ -17,12 +19,12 @@ namespace TestProject.Controllers.v1.auth
 		private readonly ILogger<AuthController> _logger;
 		private readonly AppDBContext _db;
         private readonly IStaffServices _staffServices;
-        private readonly IConfiguration _configuration;
-		public AuthController(ILogger<AuthController> logger, AppDBContext db, IConfiguration configuration, IStaffServices staffServices)
+        private readonly JwtOptions _jwtOptions;
+		public AuthController(ILogger<AuthController> logger, AppDBContext db, IStaffServices staffServices, IOptions<JwtOptions> jwtOptions)
 		{
 			_logger = logger;
 			_db = db;
-            _configuration = configuration;
+            _jwtOptions = jwtOptions.Value;
             _staffServices = staffServices;
         }
         [ApiVersion("1.0")]
@@ -42,13 +44,13 @@ namespace TestProject.Controllers.v1.auth
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtOptions:Key"] ?? ""));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtOptions:ExpiryDays"]));
+                var expires = DateTime.Now.AddDays(Convert.ToDouble(_jwtOptions.ExpiryDays));
 
                 var token = new JwtSecurityToken(
-                    _configuration["JwtOptions:Issuer"],
-                    _configuration["JwtOptions:Audience"],
+                    _jwtOptions.Issuer,
+                    _jwtOptions.Audience,
                     claims,
                     expires: expires,
                     signingCredentials: creds
