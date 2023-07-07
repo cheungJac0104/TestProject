@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestProject.Middleware.Policies;
+using TestProject.Service;
 using TestProject.Service.Weather;
 
 namespace TestProject.Controllers;
@@ -27,7 +27,8 @@ public class WeatherForecastController : ControllerBase
 
 
     [HttpGet("GetWeatherForecast")]
-    [ClientAuthorize, StaffAuthorize]
+    [Backend, Client]
+    //[Authorize]
     public Task<ResponseDto> Get()
     {
 

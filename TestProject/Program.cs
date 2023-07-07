@@ -1,14 +1,20 @@
 ﻿using TestProject;
 using TestProject.Services;
 using Microsoft.EntityFrameworkCore;
-using TestProject.Context;
-using TestProject.Middleware.Policies;
+using TestProject.Context; 
 using TestProject.Middleware;
 using TestProject.Middleware.AppSettingsOptions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Autofac;
+using TPT.App;
+using Autofac.Extensions.DependencyInjection;
+using TestProject.Service.Login;
+using Autofac.Core;
+using System.Configuration;
+using TestProject.Infrastructure;
 
 try
 {
@@ -47,6 +53,8 @@ try
         });
     });
 
+    builder.Services.Configure<AppSetting>(builder.Configuration.GetSection("AppSetting"));
+
     builder.Services.AddControllers(opt => {
 
     });
@@ -59,9 +67,9 @@ try
     builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
     builder.Services.AddScoped<IPatientQueueServices, PatientQueueServices>();
 
-    builder.Services.AddClientPolicy();
-    builder.Services.AddStaffPolicy();
-    builder.Services.AddMediKAuthHandler();
+    builder.Services.AddScoped<ILoginService, LoginService>();
+
+
 
     var app = builder.Build();
 
@@ -85,8 +93,9 @@ try
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseAuthorization();
-        app.UseAuthentication();
-        
+         
+
+        app.UseMiddleware<AuthenticationMiddleware>();
 
     }
     

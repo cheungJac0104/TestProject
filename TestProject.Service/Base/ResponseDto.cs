@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestProject.Service.Weather
+namespace TestProject.Service
 {
     public class ResponseDto
     {

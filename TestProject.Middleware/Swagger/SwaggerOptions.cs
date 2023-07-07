@@ -10,7 +10,7 @@
 		}
 
 		public string? JsonRoute { get; set; }
-		public List<EndPoint>? EndPoints { get; set; }
+		public System.Collections.Generic.List<EndPoint>? EndPoints { get; set; }
 		public string? SwaggerBasicAuthUserId { get; set; }
 		public string? SwaggerBasicAuthPassword { get; set; }
 	}
