@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TestProject.Models
 {
 
-    public class StaffQuery : ApiQuery
+    public class StaffQuery
     {
  
-        public string username { get; set; }
-        public string userpassword { get; set; }
+        public string? username { get; set; }
+        public string? userpassword { get; set; }
    
     }
 

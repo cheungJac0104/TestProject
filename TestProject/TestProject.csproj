@@ -22,10 +22,18 @@
 
   <ItemGroup>
     <None Remove="Policies\" />
+    <None Remove="Controllers\v1\auth\" />
+    <None Remove="Services\Staff\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestProject.Middleware\TestProject.Middleware.csproj" />
     <ProjectReference Include="..\TestProject.Service\TestProject.Service.csproj" />
+    <ProjectReference Include="..\TestProject.Middleware\TestProject.Middleware.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\v1\auth\" />
+    <Folder Include="Services\Staff\" />
   </ItemGroup>
 </Project>

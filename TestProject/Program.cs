@@ -1,20 +1,15 @@
 ﻿using TestProject;
 using TestProject.Services;
 using Microsoft.EntityFrameworkCore;
-using TestProject.Context; 
-using TestProject.Middleware;
-using TestProject.Middleware.AppSettingsOptions;
+using TestProject.Context;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
-using Autofac;
-using TPT.App;
-using Autofac.Extensions.DependencyInjection;
-using TestProject.Service.Login;
-using Autofac.Core;
-using System.Configuration;
+using TestProject.Services.Staff;
 using TestProject.Infrastructure;
+using TestProject.Middleware.AppSettingsOptions;
+using TestProject.Middleware;
 
 try
 {
@@ -27,19 +22,34 @@ try
     builder.Services.AddDbContext<AppDBContext>(options => options
               .UseFirebird(TestProject.Helper.ConfigurationManager.AppSetting.GetConnectionString("FireBird")));
 
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    builder.Services.ConfigureCors();
-    // Services
-
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
+
     builder.Services.AddSwaggerGen(opt => {
         opt.SwaggerDoc("v1", new OpenApiInfo() { Title = $"Medikare API v1.0", Version = "1.0"});
         opt.SwaggerDoc("v2", new OpenApiInfo() { Title = $"Medikare API v2.0", Version = "2.0" });
+
+        opt.AddSecurityDefinition("apikey", new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.ApiKey,
+            Name = "Authorization",
+            In = ParameterLocation.Header
+        });
+        opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "apikey"
+                    }
+                },
+                new string[] {}
+            }
+        });
 
         opt.DocInclusionPredicate((doc, apiDesc) =>
         {
@@ -49,7 +59,7 @@ try
             .OfType<ApiVersionAttribute>()
             .SelectMany(Attribute => Attribute.Versions).ToList();
 
-            return versions.Any(versions => $"v{versions.ToString()}".StartsWith(doc));
+            return versions.Any(versions => $"v{versions}".StartsWith(doc));
         });
     });
 
@@ -66,8 +76,14 @@ try
     // services injection
     builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
     builder.Services.AddScoped<IPatientQueueServices, PatientQueueServices>();
+    builder.Services.AddScoped<IStaffServices, StaffServices>();
 
-    builder.Services.AddScoped<ILoginService, LoginService>();
+
+
+
+    var jwtOptions = new JwtOptions();
+    builder.Configuration.GetSection(nameof(JwtOptions)).Bind(jwtOptions);
+    builder.Services.AddJwtAuthHandler(jwtOptions);
 
 
 
