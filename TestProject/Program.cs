@@ -74,8 +74,6 @@ try
     builder.Services.AddHttpContextAccessor();
 
     // services injection
-    builder.Services.AddScoped<IPatientInfoServices, PatientInfoServices>();
-    builder.Services.AddScoped<IPatientQueueServices, PatientQueueServices>();
     builder.Services.AddScoped<IStaffServices, StaffServices>();
 
 
