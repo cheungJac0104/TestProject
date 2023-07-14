@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TestProject.Context;
 using TestProject.MessageQueue.Interfaces;
-using TestProject.MessageQueue.Senders;
+using TestProject.MessageQueue.Messages;
 using TestProject.Middleware.AppSettingsOptions;
 using TestProject.Models;
 using TestProject.Services.Staff;
@@ -69,7 +69,7 @@ namespace TestProject.Controllers.v1.auth
 
                     var resultToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-                    var loginTokenSender = new LoginTokenSender()
+                    var loginTokenMessage = new LoginTokenMessage()
                     {
                         SenderId = Guid.NewGuid(),
                         SenderName = user.USERNAME,
@@ -77,14 +77,9 @@ namespace TestProject.Controllers.v1.auth
                         ExpiryDate = expires
                     };
 
-                    var senderId = await _rabbitMQHandler.LoginTokenReceive(loginTokenSender);
+                    var senderId = await _rabbitMQHandler.SendLoginToken(loginTokenMessage);
 
-                    return Ok(new
-                    {
-                        mqSenderId = senderId,
-                        token = resultToken,
-                        expiration = expires
-                    });
+                    return Ok(loginTokenMessage);
                 }
             }
             catch (Exception ex)
@@ -93,6 +88,15 @@ namespace TestProject.Controllers.v1.auth
             }
             
             return Unauthorized();
+        }
+
+
+        [ApiVersion("1.0")]
+        [HttpGet("CheckLogin")]
+        public async Task<IActionResult> CheckLogin()
+        {
+            await _rabbitMQHandler.ReceiveLoginToken();
+            return Ok();
         }
     }
 }
