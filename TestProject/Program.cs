@@ -10,6 +10,9 @@ using TestProject.Services.Staff;
 using TestProject.Infrastructure;
 using TestProject.Middleware.AppSettingsOptions;
 using TestProject.Middleware;
+using Microsoft.Extensions.DependencyInjection;
+using TestProject.MessageQueue.Interfaces;
+using TestProject.MessageQueue;
 
 try
 {
@@ -76,8 +79,10 @@ try
     // services injection
     builder.Services.AddScoped<IStaffServices, StaffServices>();
 
+    builder.Services.AddScoped<IRabbitMQHandler, RabbitMQHandler>();
 
 
+    builder.Services.Configure<RabbitMQOptions>(builder.Configuration.GetSection(nameof(RabbitMQOptions)));
 
     var jwtOptions = new JwtOptions();
     var jwtConfig = builder.Configuration.GetSection(nameof(JwtOptions));

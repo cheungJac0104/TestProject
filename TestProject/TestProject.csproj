@@ -34,6 +34,9 @@
     <ProjectReference Include="..\TestProject.Infrastructure\TestProject.Infrastructure.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\..\TestProject.MessageQueue\TestProject.MessageQueue.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\v1\auth\" />

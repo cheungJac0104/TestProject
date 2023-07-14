@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject.EntityFramework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.DAL", "..\TestProject.DAL\TestProject.DAL.csproj", "{041738F0-63D2-4879-9541-00E9894093FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject.MessageQueue", "..\TestProject.MessageQueue\TestProject.MessageQueue.csproj", "{3FEC5527-2B87-41F9-9F28-4BE7FB037EA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{041738F0-63D2-4879-9541-00E9894093FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{041738F0-63D2-4879-9541-00E9894093FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{041738F0-63D2-4879-9541-00E9894093FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FEC5527-2B87-41F9-9F28-4BE7FB037EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FEC5527-2B87-41F9-9F28-4BE7FB037EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FEC5527-2B87-41F9-9F28-4BE7FB037EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FEC5527-2B87-41F9-9F28-4BE7FB037EA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
