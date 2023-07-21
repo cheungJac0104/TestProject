@@ -13,6 +13,8 @@ using TestProject.Middleware;
 using Microsoft.Extensions.DependencyInjection;
 using TestProject.MessageQueue.Interfaces;
 using TestProject.MessageQueue;
+using MassTransit;
+using TestProject.MessageQueue.Consumers;
 
 try
 {
@@ -81,8 +83,26 @@ try
 
     builder.Services.AddScoped<IRabbitMQHandler, RabbitMQHandler>();
 
+    var rmqOptions = new RabbitMQOptions();
+    var rmqConfig = builder.Configuration.GetSection(nameof(RabbitMQOptions));
+    builder.Services.Configure<RabbitMQOptions>(rmqConfig);
+    rmqConfig.Bind(rmqOptions);
+    builder.Services.AddMassTransit(x =>
+    {
+        x.UsingRabbitMq((context, cfg) =>
+        {
+            cfg.Host(rmqOptions.Host, h =>
+            {
+                h.Username(rmqOptions.Username);
+                h.Password(rmqOptions.Password);
+            });
 
-    builder.Services.Configure<RabbitMQOptions>(builder.Configuration.GetSection(nameof(RabbitMQOptions)));
+            cfg.ReceiveEndpoint(TestProject.MessageQueue.Models.Endpoint.loginToken, e =>
+            {
+                e.Consumer<LoginTokenConsumer>();
+            });
+        });
+    });
 
     var jwtOptions = new JwtOptions();
     var jwtConfig = builder.Configuration.GetSection(nameof(JwtOptions));
