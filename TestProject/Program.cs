@@ -89,8 +89,11 @@ try
     rmqConfig.Bind(rmqOptions);
     builder.Services.AddMassTransit(x =>
     {
+        x.AddConsumer<LoginTokenConsumer>();
+
         x.UsingRabbitMq((context, cfg) =>
         {
+
             cfg.Host(rmqOptions.Host, h =>
             {
                 h.Username(rmqOptions.Username);
@@ -99,7 +102,7 @@ try
 
             cfg.ReceiveEndpoint(TestProject.MessageQueue.Models.Endpoint.loginToken, e =>
             {
-                e.Consumer<LoginTokenConsumer>();
+                e.ConfigureConsumer<LoginTokenConsumer>(context);
             });
         });
     });
